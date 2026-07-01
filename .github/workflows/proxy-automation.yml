@@ -33,11 +33,14 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build and Deploy Apigee Proxy
+        env:
+          APIGEE_TOKEN: ${{ secrets.APIGEE_TOKEN }}
+          APIGEE_ORG: ${{ secrets.APIGEE_ORG }}
         run: |
           mvn clean install -Peval \
-            -Dorg=${{ secrets.APIGEE_ORG }} \
+            -Dorg=${APIGEE_ORG} \
             -Denv=eval \
-            -Dbearer=${{ secrets.APIGEE_TOKEN }} \
+            -Dbearer=${APIGEE_TOKEN} \
             -Dhosturl=https://apigee.googleapis.com \
             -DapigeeAPIVersion=v1 \
             -Doptions=override
