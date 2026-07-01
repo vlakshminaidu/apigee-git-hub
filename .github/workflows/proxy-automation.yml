@@ -34,7 +34,7 @@ jobs:
 
       - name: Build and Deploy Apigee Proxy
         run: |
-          mvn clean install -Peval \
+          mvn clean install -Peval -e \
             -Dorg=${{ secrets.APIGEE_ORG }} \
             -Denv=${{ secrets.APIGEE_ENV }} \
             -Dbearer=${{ secrets.APIGEE_TOKEN }} \
