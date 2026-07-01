@@ -53,24 +53,17 @@
                 </executions>
             </plugin>
 
-            <!-- Step 2: Configure and Deploy -->
+            <!-- Step 2: Deploy only - no configure needed -->
             <plugin>
                 <groupId>io.apigee.build-tools.enterprise4g</groupId>
                 <artifactId>apigee-edge-maven-plugin</artifactId>
                 <version>2.4.0</version>
                 <executions>
                     <execution>
-                        <id>configure-bundle</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>configure</goal>
-                        </goals>
-                    </execution>
-                    <execution>
                         <id>deploy-bundle</id>
                         <phase>install</phase>
                         <goals>
-                            <goal>deploy</goal>
+                            <goal>deploy</goal>  <!-- ← configure goal completely removed -->
                         </goals>
                     </execution>
                 </executions>
