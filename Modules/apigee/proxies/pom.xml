@@ -19,7 +19,7 @@
                 <apigee.env>eval</apigee.env>
                 <apigee.hosturl>https://apigee.googleapis.com</apigee.hosturl>
                 <apigee.apiversion>v1</apigee.apiversion>
-                <apigee.bearer>${bearer}</apigee.bearer>
+                <apigee.bearer>${apigee.bearer}</apigee.bearer>
                 <apigee.options>override</apigee.options>
             </properties>
         </profile>
@@ -28,7 +28,6 @@
     <build>
         <plugins>
 
-            <!-- Step 1: Copy apiproxy into target/apiproxy -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.6</version>
@@ -53,7 +52,6 @@
                 </executions>
             </plugin>
 
-            <!-- Step 2: Deploy only - no configure needed -->
             <plugin>
                 <groupId>io.apigee.build-tools.enterprise4g</groupId>
                 <artifactId>apigee-edge-maven-plugin</artifactId>
@@ -63,7 +61,7 @@
                         <id>deploy-bundle</id>
                         <phase>install</phase>
                         <goals>
-                            <goal>deploy</goal>  <!-- ← configure goal completely removed -->
+                            <goal>deploy</goal>
                         </goals>
                     </execution>
                 </executions>
