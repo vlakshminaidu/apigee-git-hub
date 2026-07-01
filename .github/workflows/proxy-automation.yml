@@ -3,8 +3,8 @@ name: Deploy Apigee Proxy
 on:
   push:
     branches:
-      - main   # Trigger deployment when code is pushed to main
-  workflow_dispatch: # Allow manual trigger
+      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: Modules/apigee/proxies  # ← Fix: all steps run from here
+        working-directory: Modules/apigee/proxies
 
     steps:
       - name: Checkout repository
@@ -34,13 +34,21 @@ jobs:
 
       - name: Build the project
         run: mvn clean install
+        env:
+          APIGEE_ORG: ${{ secrets.APIGEE_ORG }}
+          APIGEE_ENV: ${{ secrets.APIGEE_ENV }}
+          APIGEE_TOKEN: ${{ secrets.APIGEE_TOKEN }}
 
       - name: Run tests
         run: mvn test
+        env:
+          APIGEE_ORG: ${{ secrets.APIGEE_ORG }}
+          APIGEE_ENV: ${{ secrets.APIGEE_ENV }}
+          APIGEE_TOKEN: ${{ secrets.APIGEE_TOKEN }}
 
       - name: Build and Deploy Apigee Proxy
         run: mvn install -P${{ secrets.APIGEE_ENV }}
         env:
-          apigee.org: ${{ secrets.APIGEE_ORG }}
-          apigee.env: ${{ secrets.APIGEE_ENV }}
-          apigee.token: ${{ secrets.APIGEE_TOKEN }}  # ← Fix: token was missing
+          APIGEE_ORG: ${{ secrets.APIGEE_ORG }}
+          APIGEE_ENV: ${{ secrets.APIGEE_ENV }}
+          APIGEE_TOKEN: ${{ secrets.APIGEE_TOKEN }}
